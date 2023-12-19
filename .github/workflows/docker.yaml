@@ -1,0 +1,20 @@
+name: Docker Image
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  docker:
+    name: Build Docker Image
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: make container
+      - name: Inspect Docker Image
+        run: docker image inspect helloserver:latest

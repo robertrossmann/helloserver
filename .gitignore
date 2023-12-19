@@ -1,0 +1,13 @@
+# Compiled binaries
+/dist
+
+# Tool caches
+/.cache
+
+# MacOS specific files
+.DS_Store
+
+# Developer-specific configuration
+.env
+.zshrc
+.bashrc
