@@ -2,6 +2,7 @@ package backend
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -16,7 +17,9 @@ func NewBackend() *Backend {
 
 func (b *Backend) Start() error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, world!"))
+		if _, err := w.Write([]byte("Hello, world!")); err != nil {
+			log.Println(fmt.Errorf("writing response: %w", err))
+		}
 	})
 
 	log.Println("starting server")
