@@ -1,0 +1,20 @@
+name: Verify
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  verify:
+    name: Lint & Test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Code Linting
+        run: make lint
+      - name: Tests
+        run: make test
