@@ -6,7 +6,7 @@ set -e
 
 image="golangci/golangci-lint:v1.55-alpine"
 
-exec docker run -it \
+exec docker run -t \
   --rm \
   --volume "$(pwd):/app" \
   --volume "$(pwd)/.cache/golangci-lint:/root/.cache" \
