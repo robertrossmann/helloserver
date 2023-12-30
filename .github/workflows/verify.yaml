@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Generate Code
+        run: make generate
       - name: Code Linting
         run: make lint
 
