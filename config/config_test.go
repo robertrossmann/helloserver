@@ -1,4 +1,4 @@
-package backend
+package config
 
 import (
 	"helloserver/testtools"
@@ -12,7 +12,7 @@ func init() {
 }
 
 func Test_NewConfig(t *testing.T) {
-	cfg, err := NewConfig()
+	cfg, err := Read()
 
 	assert.NoError(t, err)
 	assert.Equal(t, cfg.Port, 3000)

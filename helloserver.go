@@ -1,7 +1,9 @@
 package main
 
 import (
-	"helloserver/backend"
+	"fmt"
+	"helloserver/config"
+	"helloserver/server"
 	"log"
 	"os"
 
@@ -9,8 +11,10 @@ import (
 )
 
 func main() {
-	log.Println("loading dotenv...")
-	backend.LoadDotenv()
+	cfg, err := config.Read()
+	if err != nil {
+		log.Fatal(fmt.Errorf("reading config: %w", err))
+	}
 
 	app := &cli.App{
 		Name:  "helloserver",
@@ -19,8 +23,7 @@ func main() {
 			Name:  "start",
 			Usage: "Start the helloserver and listen for incoming requests",
 			Action: func(c *cli.Context) error {
-				b := backend.NewBackend()
-				return b.Start()
+				return server.Start(cfg)
 			}},
 		},
 	}

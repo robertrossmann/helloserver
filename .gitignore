@@ -1,6 +1,9 @@
 # Compiled binaries
 /dist
 
+# Generated files
+*_gen.go
+
 # Tool caches
 /.cache
 

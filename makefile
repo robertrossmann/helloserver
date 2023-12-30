@@ -3,6 +3,7 @@ export CGO_ENABLED := 0
 
 # List of all .go files in the project. Used by Make to determine if the project needs to be rebuilt.
 GOFILES := $(shell find . -type f -name '*.go')
+GQLFILES := $(shell find . -type f -name '*.graphql?')
 # These go directly to the `go build` command. It's used for passing multiple options to `-ldflags` which is currently
 # not supported via the standard `GOFLAGS` env variable - that only supports a single option.
 # See: https://github.com/golang/go/issues/38522
@@ -20,8 +21,11 @@ go.sum: go.mod
 	go mod tidy
 	touch go.sum
 
-dist/helloserver: go.sum $(GOFILES)
-	go build -o $@ $(GO_FLAGS)
+graph: graph/gqlgen.go graph/resolver.go $(GQLFILES)
+	go run graph/gqlgen.go
+
+dist/helloserver: go.sum $(GOFILES) graph
+	go build -v -o $@ $(GO_FLAGS)
 
 
 ### Human-friendly targets
