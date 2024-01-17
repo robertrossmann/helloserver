@@ -22,7 +22,9 @@ func Start(cfg config.Config) error {
 	schema := graph.NewExecutableSchema(graph.Config{Resolvers: resolver})
 	server := handler.NewDefaultServer(schema)
 
-	http.Handle("/", playground.Handler("helloserver GraphQL Playground", gqlpath))
+	http.Handle("/", playground.ApolloSandboxHandler("helloserver GraphQL Playground", gqlpath,
+		playground.WithApolloSandboxEndpointIsEditable(false),
+	))
 	http.Handle(gqlpath, server)
 
 	log.Println("starting server")
