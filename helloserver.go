@@ -3,18 +3,19 @@ package main
 import (
 	"fmt"
 	"helloserver/config"
+	"helloserver/log"
 	"helloserver/server"
-	"log"
 	"os"
 
 	"github.com/urfave/cli/v2"
 )
 
 func main() {
-	cfg, err := config.Read()
+	cfg, err := config.New()
 	if err != nil {
-		log.Fatal(fmt.Errorf("reading config: %w", err))
+		panic(fmt.Errorf("reading config: %w", err))
 	}
+	log.Init(cfg.LogLevel)
 
 	app := &cli.App{
 		Name:  "helloserver",
@@ -29,6 +30,6 @@ func main() {
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+		panic(fmt.Errorf("helloserver: %w", err))
 	}
 }
