@@ -1,8 +1,6 @@
 package backend
 
-type Backend struct {
-	PackageRoot string
-}
+type Backend struct{}
 
 func NewBackend() *Backend {
 	return &Backend{}
