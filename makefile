@@ -22,22 +22,23 @@ go.sum: go.mod
 	go mod tidy
 	touch go.sum
 
-# FIXME: this gets executed twice
-$(GQLTARGETS): $(GQLSOURCES)
+dist/gqlgen.sentinel: $(GQLTARGETS) $(GQLSOURCES) graph/*.graphqls
 	go run graph/gqlgen.go
+	touch $@
 
-generate: $(GQLTARGETS)
-	go run graph/gqlgen.go
-
-dist/helloserver: go.sum $(GQLTARGETS) $(GOFILES)
+dist/helloserver: go.sum dist/gqlgen.sentinel $(GOFILES)
 	go build -v -o $@ $(GO_FLAGS)
 
 
 ### Human-friendly targets
 
+generate: dist/gqlgen.sentinel
+
 compile: dist/helloserver
 
-lint:
+lint: generate
+	go fmt ./...
+	go vet ./...
 	./tools/golangci-lint run -v
 
 test: $(GQLTARGETS)
