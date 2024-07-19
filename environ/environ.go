@@ -11,7 +11,10 @@ var (
 )
 
 func findpkgroot() string {
-	_, here, _, _ := runtime.Caller(0)
+	_, here, _, ok := runtime.Caller(0)
+	if !ok {
+		panic("runtime.Caller is unavailable")
+	}
 	dirpath := filepath.Dir(here)
 
 	for {
