@@ -5,12 +5,14 @@ import (
 	"helloserver/config"
 	"helloserver/log"
 	"helloserver/server"
+	"helloserver/sigctx"
 	"os"
 
 	"github.com/urfave/cli/v2"
 )
 
 func main() {
+	ctx := sigctx.WithSignal(os.Interrupt)
 	cfg, err := config.New()
 	if err != nil {
 		panic(fmt.Errorf("reading config: %w", err))
@@ -24,12 +26,12 @@ func main() {
 			Name:  "start",
 			Usage: "Start the helloserver and listen for incoming requests",
 			Action: func(c *cli.Context) error {
-				return server.Start(cfg)
+				return server.Start(c.Context, cfg)
 			}},
 		},
 	}
 
-	if err := app.Run(os.Args); err != nil {
+	if err := app.RunContext(ctx, os.Args); err != nil {
 		panic(fmt.Errorf("helloserver: %w", err))
 	}
 }

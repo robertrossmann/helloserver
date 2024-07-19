@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"time"
 
 	"helloserver/environ"
 
@@ -29,13 +30,17 @@ func init() {
 }
 
 type Config struct {
-	Port     int        `env:"PORT" envDefault:"3000"`
-	LogLevel slog.Level `env:"LOG_LEVEL" envDefault:"info"`
+	Port                  int        `env:"PORT" envDefault:"3000"`
+	LogLevel              slog.Level `env:"LOG_LEVEL" envDefault:"info"`
+	ServerShutdownTimeout time.Duration
 }
 
 // New loads the configuration from the environment and returns a Config struct ready for use
 func New() (Config, error) {
-	config := Config{}
+	config := Config{
+		ServerShutdownTimeout: 15 * time.Second,
+	}
+
 	if err := env.Parse(&config); err != nil {
 		return Config{}, fmt.Errorf("marshalling env to config: %w", err)
 	}
