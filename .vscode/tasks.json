@@ -1,0 +1,95 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "process",
+			"label": "make: compile",
+			"detail": "Compile the project (Go)",
+			"command": "make",
+			"args": [
+				"compile",
+			],
+			"problemMatcher": [
+				"$go",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"presentation": {
+				"revealProblems": "onProblem",
+				"clear": true,
+			},
+			"icon": {
+				"id": "files",
+				"color": "terminal.ansiYellow",
+			},
+		},
+		{
+			"type": "process",
+			"label": "make: lint",
+			"detail": "Lint the project",
+			"command": "make",
+			"args": [
+				"lint"
+			],
+			"problemMatcher": [
+				"$go"
+			],
+			"group": "test",
+			"presentation": {
+				"reveal": "always",
+				"revealProblems": "onProblem",
+				"clear": true,
+			},
+			"icon": {
+				"id": "eye",
+				"color": "terminal.ansiGreen"
+			}
+		},
+		{
+			"type": "process",
+			"label": "make: test",
+			"detail": "Run the test suite",
+			"command": "make",
+			"args": [
+				"test",
+			],
+			"problemMatcher": [
+				"$go",
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true,
+			},
+			"presentation": {
+				"clear": true,
+			},
+			"icon": {
+				"id": "beaker",
+				"color": "terminal.ansiBlue"
+			},
+		},
+		{
+			"type": "process",
+			"label": "make: clean",
+			"detail": "Remove compiled and generated files",
+			"command": "make",
+			"args": [
+				"clean",
+			],
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"showReuseMessage": false,
+				"clear": true,
+				"close": true
+			},
+			"icon": {
+				"id": "trash",
+				"color": "terminal.ansiRed"
+			}
+		}
+	]
+}
