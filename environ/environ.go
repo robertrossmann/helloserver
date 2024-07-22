@@ -23,7 +23,7 @@ func findpkgroot() string {
 
 	for {
 		dir := filepath.Dir(current)
-		defer func() { current = dir }()
+		current = dir
 
 		isRoot := dir == filepath.Dir(dir)
 		_, err := os.Stat(filepath.Join(dir, "go.mod"))
